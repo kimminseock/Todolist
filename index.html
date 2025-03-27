@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시판</title>
+  <link href="https://fonts.googleapis.com/css?family=Gamja+Flower" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
+</head>
+<body>
+<header>
+  <h1>My To Do List</h1>
+</header>
+
+<main class="todo-section">
+  <form class="todo-form" onsubmit="addTodo(event)">
+    <input type="text" id="todoInput" placeholder="할 일을 입력하세요">
+    <button type="submit" id="btnAdd">추가</button>
+  </form>
+
+  <ul id="todoList"></ul>
+
+  <div class="btn-nav">
+    <button onclick="deleteSelected()" type="button" id="btnDelSelected">선택 삭제</button>
+    <button onclick="deleteLast()" type="button" id="btnDelLast">마지막 항목 삭제</button>
+    <button onclick="deleteAll()" type="button" id="btnDelAll">전체 삭제</button>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-content">
+    <p>© 2025 My To Do List. All rights reserved.</p>
+    <nav>
+      <ul>
+        <li><a href="#">홈</a></li>
+        <li><a href="#">개인정보 처리방침</a></li>
+        <li><a href="#">이용 약관</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<script src="js/style.js"></script>
+</body>
+</html>

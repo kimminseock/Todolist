@@ -1,0 +1,163 @@
+/* 기본적인 스타일 리셋 */
+html, body, input {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+button {
+  font-family: 'Gamja Flower', cursive;
+  background: #a369af;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 12px 20px; /* 버튼 패딩을 더 크게 설정 */
+}
+
+button:hover {
+  background-color: #8a58a0;
+}
+
+header {
+  background: #333;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  border-bottom: 2px solid #9fd6c2;
+}
+
+.todo-section {
+  width: 500px;
+  margin: 50px auto;
+  padding: 20px 30px;
+  border-radius: 10px;
+  background: #f9f9f9;
+}
+
+.todo-form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.todo-form input {
+  width: 100%; /* 입력창을 100%로 설정하여 가로 크기를 맞춤 */
+  padding: 15px; /* 패딩을 크게 설정하여 세로 길이 조정 */
+  font-size: 16px; /* 글자 크기 설정 */
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.todo-form button {
+  width: 120px; /* 버튼 가로 길이 증가 */
+  padding: 15px; /* 버튼 패딩을 크게 설정 */
+  margin-left: 15px; /* 버튼과 입력 필드 사이 여백 추가 */
+  border-radius: 5px;
+  background-color: #9fd6c2;
+  font-size: 16px;
+}
+
+ul#todoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul#todoList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  margin: 8px 0;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+ul#todoList li span {
+  flex-grow: 1;
+  padding-left: 10px;
+}
+
+ul#todoList input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.btn-nav {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-nav button {
+  margin: 5px;
+  padding: 12px 25px;
+  border: none;
+  background: #9fd6c2;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-nav button:hover {
+  background-color: #8cbeac;
+}
+
+/* 푸터 스타일 */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 14px;
+}
+
+footer .footer-content {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+footer nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+footer nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer nav ul li a:hover {
+  color: #9fd6c2;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 600px) {
+  .todo-section {
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .todo-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .todo-form input,
+  .todo-form button {
+    width: 100%;
+    margin-bottom: 10px; /* 아래 여백 추가 */
+    margin-left: 0;
+  }
+
+  footer {
+    padding: 15px 0;
+  }
+}
