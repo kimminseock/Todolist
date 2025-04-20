@@ -21,7 +21,7 @@
   </header>
 
   <form class="todo-form" onsubmit="add(event)">
-    <input type="text" id="todoInput" placeholder="할 일을 입력하세요" />
+    <label for="todoInput"></label><input type="text" id="todoInput" placeholder="할 일을 입력하세요" />
     <button type="submit">➕ 추가</button>
   </form>
 
@@ -30,7 +30,7 @@
 
   <nav class="btn-nav">
     <button onclick="deleteSelected()">✅ 선택 삭제</button>
-    <button onclick="deleteLast()">🗑 마지막 삭제</button>
+    <button onclick="deleteLast()">🗑️ 마지막 삭제</button>
     <button onclick="deleteAll()">🧹 전체 삭제</button>
   </nav>
 </section>

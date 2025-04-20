@@ -62,7 +62,7 @@ function addTodoElement(text) {
 
     // 삭제 버튼 생성
     const deleteBtn = document.createElement("button");
-    deleteBtn.innerText = "🗑";
+    deleteBtn.innerText = "🗑️";
     deleteBtn.className = "delete-btn";
     deleteBtn.style.marginLeft = "1rem";
     deleteBtn.style.cursor = "pointer";
