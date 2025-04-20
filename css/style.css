@@ -1,4 +1,4 @@
-/* 기본 설정 */
+/* 초기화 및 기본 설정 */
 * {
   margin: 0;
   padding: 0;
@@ -7,34 +7,36 @@
 
 body {
   font-family: 'Pretendard', sans-serif;
-  background-color: #f2f4f8;
+  background-color: #f0f4f8;
   color: #333;
   padding: 2rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* 전체 앱 영역 */
+/* 전체 앱 컨테이너 */
 .todo-app {
-  max-width: 500px;
+  max-width: 600px;
   margin: auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   padding: 2rem;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-/*  제목 및 서브타이틀 */
-.todo-app h1 {
+/* 헤더 영역 */
+.todo-header h1 {
   text-align: center;
-  color: #4fc3f7;
+  color: #64b5f6;
   margin-bottom: 0.5rem;
 }
 
 .sub-title {
   text-align: center;
-  color: #555;
   font-size: 1rem;
-  margin-bottom: 1.5rem;
+  color: #777;
 }
 
 .sub-title span {
@@ -42,107 +44,13 @@ body {
   color: #222;
 }
 
-/* 입력 폼 영역 */
-.todo-form {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.todo-form input {
-  flex: 1;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-
-.todo-form button {
-  background-color: #4fc3f7;
-  border: none;
-  padding: 0.75rem 1rem;
-  color: white;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.todo-form button:hover {
-  background-color: #039be5;
-}
-
-/* 할 일 목록 영역 */
-.todo-list {
-  list-style: none;
-  min-height: 100px;
-}
-
-.todo-list li {
-  display: flex;
-  align-items: center;
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 6px;
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-  gap: 1rem;
-}
-
-.todo-list li input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-}
-
-.todo-list li span {
-  flex: 1;
-}
-
-.todo-list li.done span {
-  text-decoration: line-through;
-  color: #aaa;
-}
-
-/* 하단 버튼 영역 */
-.btn-nav {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-}
-
-.btn-nav button {
-  flex: 1;
-  margin: 0 0.25rem;
-  padding: 0.5rem;
-  border: none;
-  background: #bdbdbd;
-  color: white;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.btn-nav button:hover {
-  background: #757575;
-}
-
-/* 비어 있을 때 문구 */
-.empty-text {
-  text-align: center;
-  color: #aaa;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  display: none;
-}
-
 /* 다크 모드 토글 스위치 */
 .toggle-wrap {
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  align-items: center;
   gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .switch {
@@ -164,8 +72,8 @@ body {
   top: 0; left: 0;
   right: 0; bottom: 0;
   background-color: #ccc;
-  transition: .4s;
   border-radius: 24px;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -176,27 +84,116 @@ body {
   left: 3px;
   bottom: 3px;
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 50%;
 }
 
 input:checked + .slider {
-  background-color: #4fc3f7;
+  background-color: #64b5f6;
 }
 
 input:checked + .slider:before {
   transform: translateX(24px);
 }
 
-.toggle-label {
-  font-size: 0.9rem;
-  color: #555;
+/* 입력 폼 영역 */
+.todo-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.todo-form input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.todo-form button {
+  background-color: #64b5f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.todo-form button:hover {
+  background-color: #42a5f5;
+}
+
+/* 할 일 목록 리스트 */
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 100px;
+}
+
+.todo-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.todo-list li span {
+  flex: 1;
+  margin-left: 0.75rem;
+}
+
+.todo-list li.done span {
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+.todo-list input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+/* 하단 버튼 영역 */
+.btn-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-nav button {
+  flex: 1;
+  padding: 0.5rem;
+  background-color: #90caf9;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-nav button:hover {
+  background-color: #42a5f5;
+}
+
+/* 할 일이 없을 때 표시되는 문구 */
+.empty-text {
+  text-align: center;
+  color: #bbb;
+  font-size: 1rem;
+  display: none;
 }
 
 /* 다크 모드 스타일 */
 body.dark-mode {
   background-color: #1e1e1e;
-  color: #f5f5f5;
+  color: #eee;
 }
 
 body.dark-mode .todo-app {
@@ -204,17 +201,18 @@ body.dark-mode .todo-app {
   box-shadow: none;
 }
 
-body.dark-mode input,
+body.dark-mode .todo-list li {
+  background-color: #3a3a3a;
+  color: #ddd;
+}
+
 body.dark-mode .todo-form input {
   background-color: #444;
   border: 1px solid #666;
   color: #eee;
 }
 
-body.dark-mode .todo-form button {
-  background-color: #64b5f6;
-}
-
+body.dark-mode .todo-form button,
 body.dark-mode .btn-nav button {
   background-color: #616161;
 }
@@ -223,27 +221,15 @@ body.dark-mode .btn-nav button:hover {
   background-color: #424242;
 }
 
-body.dark-mode .todo-list li {
-  background-color: #3a3a3a;
-  border-color: #555;
-}
-
-body.dark-mode .empty-text {
-  color: #aaa;
-}
-
-/* 반응형 미디어 쿼리 */
+/* 반응형 - 모바일 화면 대응 */
 @media (max-width: 480px) {
-  .todo-app {
-    padding: 1rem;
-  }
-
   .todo-form {
     flex-direction: column;
   }
-
   .todo-form input,
   .todo-form button {
     width: 100%;
+    height: 30px;
+    line-height: 30px;
   }
 }

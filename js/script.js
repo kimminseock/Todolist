@@ -1,6 +1,6 @@
-// 페이지가 로드되면 실행되는 이벤트 리스너
+// 페이지가 로드되면 실행되는 이벤트
 document.addEventListener("DOMContentLoaded", () => {
-    // localStorage에 데이터가 없는 경우 목데이터를 추가
+    // localStorage에 저장된 데이터가 없을 경우, 기본 할 일 목록을 추가
     if (!localStorage.getItem("todos")) {
         const sampleTodos = [
             "HTML 공부하기",
@@ -10,12 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
             "React 공부하기",
             "디자인 공부하기"
         ];
-        // 목데이터를 하나씩 저장
-        sampleTodos.forEach(todo => saveTodo(todo));
+        sampleTodos.forEach(todo => saveTodo(todo)); // 항목별로 저장
     }
 
-    loadTodos();   // 저장된 할 일 목록 불러오기
-    setToday();    // 오늘 날짜 출력
+    loadTodos();   // 저장된 할 일 목록을 화면에 출력
+    setToday();    // 오늘 날짜 표시
 });
 
 // 오늘 날짜를 화면에 표시하는 함수
@@ -27,107 +26,136 @@ function setToday() {
     document.getElementById("todayDate").innerText = formatted; // 날짜 출력
 }
 
-// localStorage에서 할 일 목록을 불러와 화면에 출력하는 함수
-function loadTodos() {
-    const savedTodos = JSON.parse(localStorage.getItem("todos")) || []; // 데이터 없으면 빈 배열
-    savedTodos.forEach(todo => addTodoElement(todo)); // 각 항목을 화면에 추가
-    toggleEmptyMessage(); // 할 일 없을 경우 안내 문구 표시
-}
-
-// form 제출 시 새로운 할 일을 추가하는 함수
+// form이 제출되었을 때 새로운 할 일을 추가하는 함수
 function add(event) {
-    event.preventDefault(); // form 기본 동작 막기 (새로고침 방지)
+    event.preventDefault(); // 기본 동작(페이지 새로고침) 방지
 
-    const inputField = document.getElementById("todoInput"); // 입력창 요소 가져오기
-    const todoText = inputField.value.trim(); // 입력값 양쪽 공백 제거
+    const input = document.getElementById("todoInput"); // 입력 필드 가져오기
+    const text = input.value.trim();                    // 공백 제거한 입력값
 
-    if (todoText === "") return; // 빈 값이면 추가하지 않음
+    if (!text) return; // 빈 문자열일 경우 무시
 
-    addTodoElement(todoText);  // 화면에 할 일 추가
-    saveTodo(todoText);        // localStorage에 저장
-    inputField.value = "";     // 입력창 비우기
-    toggleEmptyMessage();      // 안내 문구 상태 갱신
+    addTodoElement(text); // 화면에 할 일 추가
+    saveTodo(text);       // localStorage에 저장
+    input.value = "";     // 입력 필드 초기화
+    toggleEmptyMessage(); // 안내 문구 업데이트
 }
 
-// 하나의 할 일을 화면에 추가하는 함수
-function addTodoElement(todoText) {
+// 새로운 할 일을 화면에 추가하는 함수
+function addTodoElement(text) {
     const list = document.getElementById("listBody"); // ul 요소 선택
     const li = document.createElement("li");          // li 요소 생성
 
-    const checkbox = document.createElement("input"); // 체크박스 생성
+    // 체크박스 생성
+    const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.className = "btn-chk";
 
-    // 체크박스 상태 변경 시 줄긋기 효과 적용
+    // 체크 상태에 따라 'done' 클래스 토글
     checkbox.addEventListener("change", () => {
         li.classList.toggle("done", checkbox.checked);
     });
 
-    const span = document.createElement("span"); // 텍스트 노드 생성
-    span.innerText = todoText;
+    // 할 일 텍스트 노드 생성
+    const span = document.createElement("span");
+    span.innerText = text;
 
-    li.appendChild(checkbox); // 체크박스 추가
-    li.appendChild(span);     // 텍스트 추가
-    list.appendChild(li);     // 리스트에 li 추가
+    // 삭제 버튼 생성
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerText = "🗑";
+    deleteBtn.className = "delete-btn";
+    deleteBtn.style.marginLeft = "1rem";
+    deleteBtn.style.cursor = "pointer";
+    deleteBtn.style.border = "none";
+    deleteBtn.style.background = "transparent";
+    deleteBtn.style.fontSize = "1.1rem";
+
+    // 삭제 버튼 클릭 시 해당 항목 제거
+    deleteBtn.addEventListener("click", () => {
+        li.remove();
+        removeTodoFromStorage(text);
+        toggleEmptyMessage();
+    });
+
+    // 항목 구성 요소 조립
+    li.appendChild(checkbox);
+    li.appendChild(span);
+    li.appendChild(deleteBtn);
+
+    // 애니메이션 효과 추가
+    li.style.opacity = 0;
+    li.style.transform = "translateY(10px)";
+    list.appendChild(li);
+    requestAnimationFrame(() => {
+        li.style.transition = "all 0.3s ease";
+        li.style.opacity = 1;
+        li.style.transform = "translateY(0)";
+    });
 }
 
-// 새로운 할 일을 localStorage에 저장하는 함수
-function saveTodo(todoText) {
-    let todos = JSON.parse(localStorage.getItem("todos")) || []; // 기존 목록 불러오기
-    todos.push(todoText); // 새 항목 추가
-    localStorage.setItem("todos", JSON.stringify(todos)); // 저장소에 다시 저장
+// 할 일을 localStorage에 저장하는 함수
+function saveTodo(text) {
+    const todos = JSON.parse(localStorage.getItem("todos")) || []; // 기존 목록 불러오기
+    todos.push(text); // 새 항목 추가
+    localStorage.setItem("todos", JSON.stringify(todos)); // 저장
+}
+
+// localStorage에서 해당 할 일을 제거하는 함수
+function removeTodoFromStorage(text) {
+    let todos = JSON.parse(localStorage.getItem("todos")) || [];
+    todos = todos.filter(todo => todo !== text); // 해당 텍스트와 다른 항목만 남김
+    localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+// 저장된 할 일들을 화면에 출력하는 함수
+function loadTodos() {
+    const saved = JSON.parse(localStorage.getItem("todos")) || [];
+    saved.forEach(text => addTodoElement(text)); // 각 항목을 화면에 출력
+    toggleEmptyMessage(); // 안내 문구 표시 여부 갱신
 }
 
 // 체크된 항목만 삭제하는 함수
 function deleteSelected() {
-    const list = document.getElementById("listBody"); // ul 요소
-    const checkboxes = document.querySelectorAll(".btn-chk"); // 모든 체크박스 선택
-    let todos = JSON.parse(localStorage.getItem("todos")) || [];
+    const checkboxes = document.querySelectorAll(".btn-chk");
 
-    let updatedTodos = [];
-
-    // 체크박스 순회
-    checkboxes.forEach((checkbox, index) => {
-        if (!checkbox.checked) {
-            updatedTodos.push(todos[index]); // 체크 안 된 항목은 유지
-        } else {
-            list.removeChild(checkbox.parentElement); // 체크된 항목은 삭제
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            const text = cb.nextSibling.innerText;   // 체크된 항목의 텍스트 가져오기
+            removeTodoFromStorage(text);             // 저장소에서 제거
+            cb.parentElement.remove();               // 화면에서 제거
         }
     });
 
-    localStorage.setItem("todos", JSON.stringify(updatedTodos)); // 변경된 목록 저장
-    toggleEmptyMessage(); // 안내 문구 갱신
+    toggleEmptyMessage();
 }
 
-// 마지막 할 일을 삭제하는 함수
+// 마지막 항목을 삭제하는 함수
 function deleteLast() {
     const list = document.getElementById("listBody");
     const lastItem = list.lastElementChild;
     if (!lastItem) return; // 항목이 없으면 종료
 
-    let todos = JSON.parse(localStorage.getItem("todos")) || [];
-    todos.pop(); // 마지막 항목 제거
-    localStorage.setItem("todos", JSON.stringify(todos)); // 저장소 업데이트
-    list.removeChild(lastItem); // 화면에서 제거
+    const text = lastItem.querySelector("span")?.innerText;
+    removeTodoFromStorage(text); // 저장소에서 제거
+    list.removeChild(lastItem);  // 화면에서 제거
     toggleEmptyMessage();
 }
 
 // 모든 할 일을 삭제하는 함수
 function deleteAll() {
-    const list = document.getElementById("listBody");
-    list.innerHTML = ""; // 모든 li 제거
-    localStorage.removeItem("todos"); // 저장소 초기화
+    document.getElementById("listBody").innerHTML = ""; // 전체 목록 제거
+    localStorage.removeItem("todos");                   // 저장소 초기화
     toggleEmptyMessage();
 }
 
-// 할 일 없을 때 안내 문구 출력 여부 결정
+// 할 일이 없는 경우 안내 문구를 표시하는 함수
 function toggleEmptyMessage() {
     const list = document.getElementById("listBody");
     const message = document.getElementById("emptyMessage");
     message.style.display = list.children.length === 0 ? "block" : "none";
 }
 
-// 다크 모드 토글 이벤트
+// 다크 모드 토글 기능
 document.getElementById("darkToggle").addEventListener("change", function () {
-    document.body.classList.toggle("dark-mode", this.checked); // 체크 여부에 따라 dark-mode 클래스 토글
+    document.body.classList.toggle("dark-mode", this.checked); // 클래스 토글
 });
