@@ -13,7 +13,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* 전체 앱 컨테이너 */
+/* 전체 투두 앱 컨테이너 */
 .todo-app {
   max-width: 600px;
   margin: auto;

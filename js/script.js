@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
         sampleTodos.forEach(todo => saveTodo(todo)); // 항목별로 저장
     }
 
-    loadTodos();   // 저장된 할 일 목록을 화면에 출력
-    setToday();    // 오늘 날짜 표시
+    loadTodos(); // 저장된 할 일 목록을 화면에 출력
+    setToday();  // 오늘 날짜 표시
 });
 
 // 오늘 날짜를 화면에 표시하는 함수
