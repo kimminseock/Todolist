@@ -155,7 +155,7 @@ function toggleEmptyMessage() {
     message.style.display = list.children.length === 0 ? "block" : "none";
 }
 
-// 다크 모드 토글 기능
+// 다크 모드 토글 기능.
 document.getElementById("darkToggle").addEventListener("change", function () {
     document.body.classList.toggle("dark-mode", this.checked); // 클래스 토글
 });
