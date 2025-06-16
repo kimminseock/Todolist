@@ -16,8 +16,8 @@ body {
 /* 전체 투두 앱 컨테이너 */
 .todo-app {
   max-width: 600px;
-  margin: auto;
   background: #ffffff;
+  margin: auto;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   padding: 2rem;
